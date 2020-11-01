@@ -4,13 +4,13 @@ from redminelib import Redmine
 
 # 設定ファイル読み込み
 def import_settings():
-    with open(".\\test_xlsx\\setting.json") as settings:
+    with open("setting.json") as settings:
         return json.load(settings)
 
 # Redmineからチケット一覧を取得（コメント含む）
 def get_issues():
-    redmine_url = 'http://192.168.11.9/redmine'
-    api_key = '257825921c793209eed344bb699aad027fc68a4e'
+    redmine_url = 'http://localhost/redmine'
+    api_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
     project_id = 'sample_project'
     redmine = Redmine(redmine_url, key=api_key)
     issues = redmine.issue.filter(project_id=project_id)
@@ -42,10 +42,10 @@ try:
     issues = get_issues()
     for issue in issues:
         # テンプレート読み込み
-        wb = xlsx.load_workbook(".\\test_xlsx\\test.xlsx")
+        wb = xlsx.load_workbook("test.xlsx")
         ws = wb["test"]
         write_xlsx(settings, issue, ws)
-        wb.save(".\\test_xlsx\\test" + str(issue["id"]) + ".xlsx")
+        wb.save("test" + str(issue["id"]) + ".xlsx")
 except OSError as os_err:
     tb = sys.exc_info()[2]
     traceback.print_tb(tb, limit=None, file=None)
