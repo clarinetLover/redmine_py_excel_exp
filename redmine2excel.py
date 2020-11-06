@@ -26,7 +26,6 @@ def write_xlsx(settings, issue):
     try:
         wb = xlsx.load_workbook("test.xlsx")
         ws = wb["test"]
-        wb.save("test" + str(issue["id"]) + ".xlsx")
         for key in settings.keys():
             tmp = ""
             format_date = "{0:%Y/%m/%d}"
@@ -39,6 +38,7 @@ def write_xlsx(settings, issue):
             else:
                 tmp = issue[key]
             ws[settings[key]].value = tmp
+        wb.save("test" + str(issue["id"]) + ".xlsx")
     except OSError as os_err:
         tb = sys.exc_info()[2]
         traceback.print_tb(tb, limit=None, file=None)
